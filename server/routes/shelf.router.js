@@ -1,4 +1,5 @@
 const express = require('express');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/', (req, res) => {
 /**
  * Add an item for the logged in user to the shelf
  */
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
     console.log(req.body)
     pool.query(`INSERT INTO "item" ("description", "image_url", "person_id")
                 VALUES ($1, $2, $3)`, [req.body.description, req.body.image_url, req.body.user_id])
@@ -36,7 +37,7 @@ router.post('/', (req, res) => {
 /**
  * Delete an item if it's something the logged in user added
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
     console.log (req)
     const queryText = 'DELETE FROM "item" WHERE id=$1';
   pool.query(queryText, [req.params.id])
