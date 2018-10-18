@@ -12,3 +12,28 @@ export function callItemGet() {
       throw error.response || error;
     });
 }
+
+export function callItemDelete(id) {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+
+  return axios.delete('/api/shelf/' + id, config)
+    .then(response => response.status)
+    .catch(error => {
+      throw error.response || error;
+    });
+}
+
+export function callItemPost(dataToSend) {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+  return axios.post('/api/shelf', dataToSend, config)
+    .then(response => response.status)
+    .catch(error => {
+      throw error.response || error;
+    });
+}
