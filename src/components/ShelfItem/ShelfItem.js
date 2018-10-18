@@ -14,6 +14,17 @@ import { ITEM_ACTIONS } from '../../redux/actions/itemActions';
 class ShelfItem extends Component {
 
 
+    handleClick = () => {
+        console.log(this.props);
+        
+        if(this.props.username === this.props.user.userName) {
+            this.props.dispatch({ type: ITEM_ACTIONS.DELETE_ITEM, payload: this.props.id })
+        } else {
+            alert('Sorry. You can only delete your own items.')
+        }
+    }
+
+
     render() {
         const styles = {
             media: {
@@ -32,7 +43,7 @@ class ShelfItem extends Component {
                     <Typography variant="title">
                         {this.props.description} uploaded by {this.props.username}
                     </Typography>
-                    <IconButton onClick={()=>this.props.dispatch({ type: ITEM_ACTIONS.DELETE_ITEM, payload:this.props.id })}>
+                    <IconButton onClick={this.handleClick}>
                         <DeleteIcon/>
                     </IconButton>
                 </CardActions>
@@ -41,4 +52,6 @@ class ShelfItem extends Component {
     }
 }
 
-export default connect()(ShelfItem);
+const mapStateToProps = ({ user }) => ({ user });
+
+export default connect(mapStateToProps)(ShelfItem);
