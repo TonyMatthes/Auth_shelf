@@ -37,3 +37,19 @@ export function callItemPost(dataToSend) {
       throw error.response || error;
     });
 }
+
+export function callGetItemCount() {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+
+  return axios.get('/api/shelf/count', config)
+    .then(response => {
+      console.log('getting count:', response.data);
+      return response.data;
+    })
+    .catch(error => {
+      throw error.response || error;
+    });
+}
