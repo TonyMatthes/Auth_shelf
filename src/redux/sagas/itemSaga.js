@@ -1,6 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { ITEM_ACTIONS } from '../actions/itemActions';
-import { callItemGet, callItemDelete, callItemPost } from '../requests/itemRequests';
+import { callItemGet, callItemDelete, callItemPost, callGetItemCount } from '../requests/itemRequests';
 
 function* fetchItems() {
   try {
@@ -10,6 +10,15 @@ function* fetchItems() {
     yield put({ type: ITEM_ACTIONS.SET_ITEMS, payload: items });
   } catch (error) {
     console.log('Error fetching items', error);
+  }
+}
+
+function* fetchCount() {
+  try {
+    const count = yield callGetItemCount();
+    yield put({ type: ITEM_ACTIONS.SET_COUNT });
+  } catch (error) {
+    console.log('Error fetching count:', error);
   }
 }
 
@@ -36,6 +45,7 @@ function* itemSaga() {
   yield takeLatest(ITEM_ACTIONS.GET_ITEMS, fetchItems);
   yield takeLatest(ITEM_ACTIONS.DELETE_ITEM, deleteItem);
   yield takeLatest(ITEM_ACTIONS.ADD_ITEM, addItem);
+  yield takeLatest(ITEM_ACTIONS.GET_COUNT, fetchCount);
 }
 
 export default itemSaga;
