@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import Grid from '@material-ui/core/Grid';
 import Nav from '../../components/Nav/Nav';
 import { ITEM_ACTIONS } from '../../redux/actions/itemActions';
+import ShelfItem from '../ShelfItem/ShelfItem'
 
 const mapStateToProps = state => ({
   state
@@ -18,9 +19,18 @@ class ShelfPage extends Component {
   render() {
     return (
       <div>
-        <p>
-          Shelf Page
-          </p>
+        <Grid container direction="row" alignItems="center" spacing={40}>
+          {this.props.state.itemList.shelf.map(item => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item.id} >
+              <ShelfItem
+                id={item.id}
+                image={item.image_url}
+                description={item.description}
+                username={item.username}
+                />
+            </Grid>
+          ))}
+        </Grid>
         <pre>{JSON.stringify(this.props.state, null, 2)}</pre>
       </div>
     )
