@@ -20,6 +20,11 @@ const Nav = () => (
             Shelf Page
           </Link>
         </li>
+        <li>
+          <Link to="/count">
+            Count Page
+          </Link>
+        </li>
       </ul>
     </div>
   </div>

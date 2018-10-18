@@ -12,6 +12,7 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
 import ShelfPage from './components/ShelfPage/ShelfPage';
+import CountPage from './components/CountPage/CountPage';
 
 import './styles/main.css';
 
@@ -40,6 +41,10 @@ const App = () => (
         <Route
           path="/shelf"
           component={ShelfPage}
+        />
+        <Route
+          path="/count"
+          component={CountPage}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />

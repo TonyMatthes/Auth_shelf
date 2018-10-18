@@ -45,7 +45,10 @@ export function callGetItemCount() {
   };
 
   return axios.get('/api/shelf/count', config)
-    .then(response => response.data)
+    .then(response => {
+      console.log('getting count:', response.data);
+      return response.data;
+    })
     .catch(error => {
       throw error.response || error;
     });

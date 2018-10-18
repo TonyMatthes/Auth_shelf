@@ -16,7 +16,7 @@ function* fetchItems() {
 function* fetchCount() {
   try {
     const count = yield callGetItemCount();
-    yield put({ type: ITEM_ACTIONS.SET_COUNT });
+    yield put({ type: ITEM_ACTIONS.SET_COUNT, payload: count });
   } catch (error) {
     console.log('Error fetching count:', error);
   }
