@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Nav from '../../components/Nav/Nav';
 import { ITEM_ACTIONS } from '../../redux/actions/itemActions';
+import CountTable from '../CountTable/CountTable';
 
 const mapStateToProps = state => ({
   state
@@ -18,6 +19,7 @@ class CountPage extends Component {
       <div>
         <Nav />
         <h2>Count Page</h2>
+        <CountTable />
         <pre>{JSON.stringify(this.props.state, null, 2)}</pre>
       </div>
     )
