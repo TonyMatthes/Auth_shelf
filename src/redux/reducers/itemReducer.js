@@ -10,7 +10,17 @@ const shelf = (state = [], action) => {
   }
 }
 
+const count = (state = [], action) => {
+  switch (action.type) {
+    case ITEM_ACTIONS.SET_COUNT:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 
 export default combineReducers({
-  shelf
+  shelf,
+  count,
 })
