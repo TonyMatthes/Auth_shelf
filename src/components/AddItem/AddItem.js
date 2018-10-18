@@ -16,9 +16,6 @@ class AddItem extends Component {
         image_url: '',
     }
 
-    componentDidMount() {
-    }
-
     handleChange = (input) => event => {
         this.setState({ [input]: event.target.value, })
     }
