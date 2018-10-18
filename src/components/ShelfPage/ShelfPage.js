@@ -19,6 +19,7 @@ class ShelfPage extends Component {
   render() {
     return (
       <div>
+        <Nav />
         <Grid container direction="row" alignItems="center" spacing={40}>
           {this.props.state.itemList.shelf.map(item => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={item.id} >
