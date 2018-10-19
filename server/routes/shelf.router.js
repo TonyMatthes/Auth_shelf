@@ -7,7 +7,7 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/:id', (req, res) => {
-    pool.query(`SELECT "item"."id", "description", "image_url", "person"."username" FROM "item"
+    pool.query(`SELECT "item"."id", "description", "image_url", "person"."username", "item"."person_id"  FROM "item"
                     JOIN "person" ON "person"."id" = "item"."person_id"
                     WHERE "person"."id" = ($1)`, [req.params.id])
         .then((result) => {
@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    pool.query(`SELECT "item"."id", "description", "image_url", "person"."username" FROM "item"
+    pool.query(`SELECT "item"."id", "description", "image_url", "person"."username", "item"."person_id" FROM "item"
                     JOIN "person" ON "person"."id" = "item"."person_id"`)
         .then((result) => {
             res.send(result.rows)

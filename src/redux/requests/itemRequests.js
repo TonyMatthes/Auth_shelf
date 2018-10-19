@@ -1,16 +1,24 @@
 import axios from 'axios';
 
-export function callItemGet() {
+export function callItemGet(payload) {
   const config = {
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
   };
-
-  return axios.get('/api/shelf', config)
-    .then(response => response.data)
-    .catch(error => {
-      throw error.response || error;
-    });
+  if (payload) {
+    return axios.get('/api/shelf/' + payload.params.id, config)
+      .then(response => response.data)
+      .catch(error => {
+        throw error.response || error;
+      });
+  } else {
+    return axios.get('/api/shelf', config)
+      .then(response => response.data)
+      .catch(error => {
+        throw error.response || error;
+      });
+  }
+  
 }
 
 export function callItemDelete(id) {

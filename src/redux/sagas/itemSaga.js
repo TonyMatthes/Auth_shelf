@@ -2,10 +2,10 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { ITEM_ACTIONS } from '../actions/itemActions';
 import { callItemGet, callItemDelete, callItemPost, callGetItemCount } from '../requests/itemRequests';
 
-function* fetchItems() {
+function* fetchItems(action) {
   try {
     //stores server response.data as 'items'
-    const items = yield callItemGet();
+    const items = yield callItemGet(action.payload);
     //stores items list in redux store
     yield put({ type: ITEM_ACTIONS.SET_ITEMS, payload: items });
   } catch (error) {

@@ -8,11 +8,14 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux';
 import { ITEM_ACTIONS } from '../../redux/actions/itemActions';
+import { Link, withRouter } from 'react-router-dom';
+import { matchPath } from 'react-router';
+
 
 
 
 class ShelfItem extends Component {
-
+    state = {}
 
     handleClick = () => {
         console.log(this.props);
@@ -22,6 +25,24 @@ class ShelfItem extends Component {
         } else {
             alert('Sorry. You can only delete your own items.')
         }
+    }
+
+    handleLink = () => {
+        console.log(this.props);
+        
+        const match = matchPath(this.props.pathname, {
+            path: `/shelf/:id`
+        })
+        console.log('match=', match)
+        this.props.dispatch({ type: ITEM_ACTIONS.GET_ITEMS, payload: match });
+        this.props.history.push(match.url)
+    }
+
+    componentDidMount() {
+        const match = matchPath(this.props.pathname, {
+            path: `/shelf/:id`
+        })
+        this.setState({match})
     }
 
 
@@ -35,13 +56,14 @@ class ShelfItem extends Component {
 
         return (
             <Card >
+                <pre>{JSON.stringify(this.state)}</pre>
                     <CardMedia
                         style={styles.media}
                         image={this.props.image}
                         title={this.props.description} />
                 <CardActions>
                     <Typography variant="title">
-                        {this.props.description} uploaded by {this.props.username}
+                        {this.props.description} uploaded by <Link onClick={this.handleLink} to={`/shelf/${this.props.person_id}`}>{this.props.username}</Link> 
                     </Typography>
                     <IconButton onClick={this.handleClick}>
                         <DeleteIcon/>
@@ -54,4 +76,4 @@ class ShelfItem extends Component {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-export default connect(mapStateToProps)(ShelfItem);
+export default connect(mapStateToProps)(withRouter(ShelfItem));
