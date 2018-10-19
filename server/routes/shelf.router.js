@@ -6,9 +6,22 @@ const router = express.Router();
 /**
  * Get all of the items on the shelf
  */
+router.get('/:id', (req, res) => {
+    pool.query(`SELECT "item"."id", "description", "image_url", "person"."username" FROM "item"
+                    JOIN "person" ON "person"."id" = "item"."person_id"
+                    WHERE "person"."id" = ($1)`, [req.params.id])
+        .then((result) => {
+            res.send(result.rows)
+        })
+        .catch((error) => {
+            console.log('error with item Select', error)
+            res.sendStatus(500)
+        })
+});
+
 router.get('/', (req, res) => {
     pool.query(`SELECT "item"."id", "description", "image_url", "person"."username" FROM "item"
-                JOIN "person" ON "person"."id" = "item"."person_id"`)
+                    JOIN "person" ON "person"."id" = "item"."person_id"`)
         .then((result) => {
             res.send(result.rows)
         })
@@ -38,14 +51,14 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
-    console.log (req.user)
+    console.log(req.user)
     const queryText = 'DELETE FROM "item" WHERE id=$1 AND person_id=$2';
-  pool.query(queryText, [req.params.id, req.user.id])
-    .then(() => { res.sendStatus(200); })
-    .catch((err) => {
-      console.log('Error in DELETE', err);
-      res.sendStatus(500);
-    });
+    pool.query(queryText, [req.params.id, req.user.id])
+        .then(() => { res.sendStatus(200); })
+        .catch((err) => {
+            console.log('Error in DELETE', err);
+            res.sendStatus(500);
+        });
 });
 
 
@@ -66,13 +79,13 @@ router.get('/count', (req, res) => {
                 FROM "person"
                 LEFT JOIN "item" ON "person"."id" = "item"."person_id"
                 GROUP BY "person"."id";`)
-      .then((result) => {
-          res.send(result.rows)
-      })
-      .catch((error) => {
-          console.log('error with item Select', error)
-          res.sendStatus(500)
-      })
+        .then((result) => {
+            res.send(result.rows)
+        })
+        .catch((error) => {
+            console.log('error with item Select', error)
+            res.sendStatus(500)
+        })
 });
 
 
